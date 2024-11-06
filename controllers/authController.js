@@ -8,8 +8,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export const registerCliente = async (req, res) => {
-    const { nombre, apellido, correo, telefono, contraseña } = req.body;
-
+    const { nombre, apellido, correo, telefono, contraseña, rol } = req.body;
     if (!contraseña) {
         return res.status(400).json({ message: 'La contraseña es obligatoria' });
     }
@@ -21,8 +20,8 @@ export const registerCliente = async (req, res) => {
         }
 
         const hashedPassword = await bcrypt.hash(contraseña, 10);
-        await db.query('INSERT INTO clientes (nombre, apellido, correo, telefono, contraseña) VALUES (?, ?, ?, ?, ?)', 
-        [nombre, apellido, correo, telefono, hashedPassword]);
+        await db.query('INSERT INTO usuarios (nombre, apellido, correo, telefono, contraseña, rol) VALUES (?, ?, ?, ?, ?, ?)', 
+        [nombre, apellido, correo, telefono, hashedPassword, rol]);
 
         res.status(201).json({ message: 'Cliente registrado exitosamente' });
     } catch (error) {
@@ -46,8 +45,8 @@ export const login = async (req, res) => {
             return res.status(400).json({ message: 'Credenciales inválidas' });
         }
 
-        const token = jwt.sign({ id: user.id, role: 'cliente' }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        res.json({ token, nombre: user.nombre });
+        const token = jwt.sign({ id: user.id, role: user.rol }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        res.json({ token, nombre: user.nombre , rol: user.rol });
     } catch (error) {
         console.error('Error en el inicio de sesión:', error);
         res.status(500).json({ message: 'Error en el inicio de sesión' });

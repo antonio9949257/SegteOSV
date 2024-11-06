@@ -16,5 +16,17 @@ const pool = mysql.createPool({ // Cambia a createPool
     }
 });
 
+const testConnection = async () => {
+    try {
+        const connection = await pool.getConnection();
+        console.log("Conexión exitosa a MySQL 🚀");
+        connection.release(); // No olvides liberar la conexión después de usarla
+    } catch (error) {
+        console.error("Error al conectar con la base de datos: ", error);
+    }
+};
+
+// Llamamos a la función para probar la conexión
+testConnection();
 // Exporta el pool de conexiones
 export default pool;
