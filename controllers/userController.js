@@ -1,6 +1,5 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-// import { obtenerUsuarioPorUsername, crearUsuario } from '../models/userModel.js';
 import {createUser, getUserById, updateUser, getUserActivities} from '../models/userModel.js'
 
 
