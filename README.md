@@ -39,14 +39,13 @@
 1. Clonar o descargar el repositorio en un zip y descomprimirlo en tu máquina.
     
     ```bash
-    git clone <name_repositorio>
-    
+    git clone git@github.com:antonio9949257/SegteOSV.git
     ```
 
 2. Ingresar al directorio principal del proyecto:
     
     ```bash
-    cd <name_repositorio>
+    cd SegteOSV
     
     ```
     
